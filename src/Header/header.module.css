@@ -1,10 +1,34 @@
 .header{
-    background-color: #ff9a76;
+    /* background-color: #ff9a76; */
+    width: auto;
+    height: 100vh;
+    background-image: url('../images/18824958.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
     color: white;
     text-align: center;
     padding: 5px;    
 }
 
+a, a:hover{
+    text-decoration: none !important;
+}
+
+.container{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+}
+
 .headerText{
-    font-size: 2rem;
+    font-size: 5rem;
+    color:  rgb(255, 197, 88);
+}
+
+.btnStart{
+    font-size: 1.2em !important;
+    border-color: rgb(224, 224, 83) !important;
+    color: rgb(224, 224, 83) !important;
 }

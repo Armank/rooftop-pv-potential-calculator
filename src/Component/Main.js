@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import MapBox from "./MapBox";
 
+import Grid from '@material-ui/core/Grid';
+
+import style from "./component.module.css";
+
 const DEFAULT_LONGITUDE = 24.66876706129493;
 const DEFAULT_LATITUDE = 59.3960972;
 
@@ -42,25 +46,32 @@ const Main = () => {
     }
 
     return(
-        <div>
-        <form className="search-form" onSubmit={e => {
-            e.preventDefault();
-            setQuery(street + " " + houseNumber.replace(/\//g, "-") + ", Tallinn");
-            setQStreet(makeFirstLetterCapital(street));
-            setQHouseNumber(houseNumber.replace(/-/g,"/"));
-        }}>
-            <input className="search-bar" type="text" onChange={e => {
-                setStreet(e.target.value);
-            }} value={street} placeholder="Search street ..." />
+        <div id="main" className={style.mainContainer}>
+            <div className={style.inputForm}>
+                <form className={style.searchForm} onSubmit={e => {
+                    e.preventDefault();
+                    setQuery(street + " " + houseNumber.replace(/\//g, "-") + ", Tallinn");
+                    if(street){
+                        setQStreet(makeFirstLetterCapital(street));
+                        setQHouseNumber(houseNumber.replace(/-/g,"/"));
+                    }else{
+                        setQStreet("Kinga");
+                        setQHouseNumber("1");
+                    }
+                }}>
+                    <input className={style.searchBar} type="text" onChange={e => {
+                        setStreet(e.target.value);
+                    }} value={street} placeholder="Search street ..." />
 
-            <input className="search-bar" type="text" onChange={e => {
-                setHouseNumber(e.target.value);
-            }} value={houseNumber} placeholder="Search address ..." />
+                    <input className={style.searchBar} type="text" onChange={e => {
+                        setHouseNumber(e.target.value);
+                    }} value={houseNumber} placeholder="Search house number ..." />
 
-            <button className="search-button" type="submit">Search</button>
-        </form>
-        <MapBox latitude={lat} longitude={long} street={qStreet} 
-            houseNumber={qHouseNumber} />
+                    <button className={style.searchButton} type="submit">Search</button>
+                </form>
+            </div>
+            <MapBox latitude={lat} longitude={long} street={qStreet} 
+                houseNumber={qHouseNumber} />
         </div>
     );
 }

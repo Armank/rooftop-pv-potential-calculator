@@ -5,7 +5,7 @@ import style from "./footer.module.css";
 const Footer = () => {
     return(
         <div className={style.footer}>
-            <h2>My Map</h2>
+            <p><a href='https://www.freepik.com/vectors/cartoon' target="_blank">Cartoon vector created by upklyak - www.freepik.com</a></p>
         </div>
     );
 }
