@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {Map, TileLayer, Polygon} from 'react-leaflet';
+import {Map, TileLayer} from 'react-leaflet';
 import OverpassLayer from './OverpassLayer';
 
 const MapBox = (props) => {

@@ -6,7 +6,6 @@ const overpass = require("query-overpass");
 const OverpassLayer = (props) => {
 
     const [geojson, setGeojson] = useState();
-    let key;
     useEffect(()=>{
         makeQuery();
     },[props.street, props.houseNumber]);
