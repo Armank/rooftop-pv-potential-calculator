@@ -7,6 +7,8 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@turf/area": "^6.0.1",
+    "@turf/turf": "^5.1.6",
     "bootstrap": "^4.5.3",
     "leaflet-overpass-layer": "^2.8.3",
     "query-overpass": "^1.5.5",

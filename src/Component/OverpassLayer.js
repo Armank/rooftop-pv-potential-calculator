@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { GeoJSON } from 'react-leaflet';
+var turf = require('@turf/turf');
 
 const overpass = require("query-overpass");
 
@@ -21,8 +22,10 @@ const OverpassLayer = (props) => {
     }
 
     const dataHandler = (error, osmData) => {
-        if (!error && osmData.features !== undefined) {
+        if (!error && osmData.features !== undefined && osmData.features[0] !== undefined) {
           console.log(osmData.features[0]);
+          let area = getArea(osmData.features[0].geometry.coordinates[0]);
+          console.log(area);
           setGeojson(osmData);
         }
     };
@@ -33,6 +36,16 @@ const OverpassLayer = (props) => {
         }else{
           return geojson.features[0].id;
         }
+    }
+
+    function getArea(array){
+      if(array){
+        let arrayPolygon = array;
+        let polygon = turf.polygon([arrayPolygon]);
+        let area = turf.area(polygon);
+        return area;
+      }
+      return 0;
     }
 
     return(
