@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MapBox from "./MapBox";
 
-import Grid from '@material-ui/core/Grid';
-
 import style from "./component.module.css";
 
 const DEFAULT_LONGITUDE = 24.66876706129493;
@@ -14,14 +12,20 @@ const Main = () => {
     const [long, setLongitude] = useState("");
     const [street, setStreet] = useState("");
     const [houseNumber, setHouseNumber] = useState("");
-    const [qStreet, setQStreet] = useState("Kinga");
-    const [qHouseNumber, setQHouseNumber] = useState("1");
-
+    const [address, setAddress] = useState({
+        street: 'Kinga',
+        hNumber: '1'
+    });
+    const [position, setPosition] = useState({
+        ltd: "",
+        lng: ""
+    });
+    
     useEffect(() => {
         getSearchData();
         console.log(query);
     },[query]);
-
+    
     const getSearchData = async () => {
         const exampleReq = `https://nominatim.openstreetmap.org/search/${query}?format=json&building=*&addressdetails=1&limit=1&polygon_geojson=1`;
         const response = await fetch(exampleReq);
@@ -36,7 +40,6 @@ const Main = () => {
         }else{
             setLatitude(data[0].lat);
             setLongitude(data[0].lon);
-            // console.log(data);
         }
     };
 
@@ -45,18 +48,34 @@ const Main = () => {
         return replaced;
     }
 
+    const updateMapBox = () => {
+        if(lat && long){
+            return(
+                <MapBox latitude={lat} longitude={long} street={address.street} houseNumber={address.hNumber} />
+            );
+        }
+    }
+
     return(
         <div id="main" className={style.mainContainer}>
             <div className={style.inputForm}>
                 <form className={style.searchForm} onSubmit={e => {
                     e.preventDefault();
                     setQuery(street + " " + houseNumber.replace(/\//g, "-") + ", Tallinn");
+                    setPosition({
+                        ltd: lat,
+                        lng: long
+                    });
                     if(street){
-                        setQStreet(makeFirstLetterCapital(street));
-                        setQHouseNumber(houseNumber.replace(/-/g,"/"));
+                        setAddress({
+                            street: makeFirstLetterCapital(street),
+                            hNumber: houseNumber.replace(/-/g,"/")
+                        });
                     }else{
-                        setQStreet("Kinga");
-                        setQHouseNumber("1");
+                        setAddress({
+                            street: "Kinga",
+                            hNumber: "1"
+                        });
                     }
                 }}>
                     <input className={style.searchBar} type="text" onChange={e => {
@@ -70,8 +89,7 @@ const Main = () => {
                     <button className={style.searchButton} type="submit">Search</button>
                 </form>
             </div>
-            <MapBox latitude={lat} longitude={long} street={qStreet} 
-                houseNumber={qHouseNumber} />
+            {updateMapBox()}
         </div>
     );
 }

@@ -8,7 +8,7 @@ const OverpassLayer = (props) => {
 
     const [geojson, setGeojson] = useState();
     useEffect(()=>{
-        makeQuery();
+      makeQuery();
     },[props.street, props.houseNumber]);
 
     const makeQuery = () => {
