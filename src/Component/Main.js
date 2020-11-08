@@ -16,10 +16,6 @@ const Main = () => {
         street: 'Kinga',
         hNumber: '1'
     });
-    const [position, setPosition] = useState({
-        ltd: "",
-        lng: ""
-    });
     
     useEffect(() => {
         getSearchData();
@@ -62,10 +58,6 @@ const Main = () => {
                 <form className={style.searchForm} onSubmit={e => {
                     e.preventDefault();
                     setQuery(street + " " + houseNumber.replace(/\//g, "-") + ", Tallinn");
-                    setPosition({
-                        ltd: lat,
-                        lng: long
-                    });
                     if(street){
                         setAddress({
                             street: makeFirstLetterCapital(street),
