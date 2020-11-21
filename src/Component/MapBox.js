@@ -13,7 +13,6 @@ const MapBox = (props) => {
     const passHouseNumber = props.houseNumber;
     
     const updateMap = () => {
-        // console.log("updateMap() - lat ---> " + props.latitude);
         return(
             <MapContainer center={[props.latitude, props.longitude]} zoom={20}>
                 <ChangeView center={[props.latitude, props.longitude]} zoom={20} />
