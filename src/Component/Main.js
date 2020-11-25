@@ -21,6 +21,8 @@ const Main = () => {
     hNumber: "1",
   });
   const [geojson, setGeojson] = useState();
+  var [area, setArea] = useState();
+
   useEffect(() => {
     getSearchData();
     console.log(query);
@@ -53,23 +55,16 @@ const Main = () => {
     };
     overpass(query, dataHandler, options);
   };
-  
+
   const dataHandler = (error, osmData) => {
     if (
       !error &&
       osmData.features !== undefined &&
       osmData.features[0] !== undefined
     ) {
-      // console.log(osmData.features[0]);
-      let area = (getArea(osmData.features[0].geometry.coordinates[0]));
-      console.log("Rooftop Area", area);
+      console.log(osmData.features[0]);
+      setArea((getArea(osmData.features[0].geometry.coordinates[0])));
       setGeojson(osmData);
-      if(osmData){
-        console.log(osmData.features[0].properties);
-      }
-      if(geojson){
-        console.log(geojson.features[0].properties);
-      }
     }
   };
 
@@ -101,6 +96,19 @@ const Main = () => {
     }
   };
 
+  const validateAddress = () => {
+    if (!street) {
+      setAddress({
+        street: "Kinga",
+        hNumber: "1",
+      });
+    }
+    setAddress({
+      street: makeFirstLetterCapital(street),
+      hNumber: houseNumber.replace(/-/g, "/"),
+    });
+  }
+
   return (
     <div>
       <div id="main" className={style.mainContainer}>
@@ -112,17 +120,7 @@ const Main = () => {
               setQuery(
                 street + " " + houseNumber.replace(/\//g, "-") + ", Tallinn"
               );
-              if (street) {
-                setAddress({
-                  street: makeFirstLetterCapital(street),
-                  hNumber: houseNumber.replace(/-/g, "/"),
-                });
-              } else {
-                setAddress({
-                  street: "Kinga",
-                  hNumber: "1",
-                });
-              }
+              validateAddress();
             }}
           >
             <input
@@ -152,7 +150,7 @@ const Main = () => {
         </div>
         {updateMapBox()}
       </div>
-      <CalculationResults street={address.street} houseNumber={address.hNumber} geoJson={geojson} />
+      <CalculationResults street={address.street} houseNumber={address.hNumber} geoJson={geojson} area={area} />
     </div>
   );
 };

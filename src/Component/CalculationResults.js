@@ -15,6 +15,7 @@ const CalculationResults = (props) => {
       <div className={style.resultsContainer}>
         <div className={style.dataContainer}>
           <h3>{geojson}</h3>
+          <p>Rooftop Area - {props.area}</p>
         </div>
       </div>
     </div>
