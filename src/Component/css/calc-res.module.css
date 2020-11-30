@@ -3,6 +3,7 @@
     position: relative;
     width: 100%;
     height: 100vh;
+    font-family: 'Noto Serif', serif;
 }
 
 .resultsContainer{
@@ -19,4 +20,15 @@
     height: 80%;
     background-color: white;
     border-radius: 20px;
+    padding: 15px;
+    font-size: 1.4em;
+    color: #ffffff;
+}
+
+.column{
+    /* border: 2px solid; */
+    border-radius: 10px;
+    margin: 10px;
+    background-color: #59886b;
+    padding: 0.5rem;
 }

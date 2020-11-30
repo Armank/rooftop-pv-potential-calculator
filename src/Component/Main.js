@@ -117,10 +117,12 @@ const Main = () => {
             className={style.searchForm}
             onSubmit={(e) => {
               e.preventDefault();
-              setQuery(
-                street + " " + houseNumber.replace(/\//g, "-") + ", Tallinn"
-              );
-              validateAddress();
+              if(street){
+                setQuery(
+                  street + " " + houseNumber.replace(/\//g, "-") + ", Tallinn"
+                );
+                validateAddress();
+              }
             }}
           >
             <input
