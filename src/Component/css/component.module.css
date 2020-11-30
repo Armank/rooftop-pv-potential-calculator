@@ -29,9 +29,11 @@
     margin: 10px;
     font-size: 1.5rem;
     color: rgb(85, 136, 28);
+    outline: none;
 }
   
 .searchButton{
+    outline-style: none !important;
     background-color:rgb(85, 136, 28);
     border: none;
     border-radius: 20px;
@@ -39,3 +41,10 @@
     color: white;
     font-size: 1.5rem;
 }
+
+.searchButton:active, 
+ .addButton:focus 
+ {
+     border: 0.4rem solid #adce74; /* here configure as your needs */
+     color:#fffaa4;
+  }
