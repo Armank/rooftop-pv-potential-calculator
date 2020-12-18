@@ -45,6 +45,6 @@
 .searchButton:active, 
  .addButton:focus 
  {
-     border: 0.4rem solid #adce74; /* here configure as your needs */
+     border: 0.4rem solid #adce74;
      color:#fffaa4;
   }
