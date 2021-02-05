@@ -152,7 +152,8 @@ const Main = () => {
         </div>
         {updateMapBox()}
       </div>
-      <CalculationResults street={address.street} houseNumber={address.hNumber} geoJson={geojson} area={area} />
+      <CalculationResults street={address.street} houseNumber={address.hNumber} 
+        geoJson={geojson} area={area} latitude={lat} longitude={long} />
     </div>
   );
 };
