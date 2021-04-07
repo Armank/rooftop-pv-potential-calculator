@@ -25,7 +25,7 @@ const Main = () => {
 
   useEffect(() => {
     getSearchData();
-    console.log(query);
+    // console.log(query);
     makeQuery(address.street, address.hNumber);
   }, [query, address.street, address.hNumber]);
 
@@ -36,7 +36,7 @@ const Main = () => {
     // console.log(data);
     if (data === undefined || data.length === 0) {
       // array empty or does not exist
-      console.log("data array is empty");
+      // console.log("data array is empty");
       alert("Given address unrecognized! Try again please.");
       setLatitude(DEFAULT_LATITUDE);
       setLongitude(DEFAULT_LONGITUDE);
@@ -62,7 +62,7 @@ const Main = () => {
       osmData.features !== undefined &&
       osmData.features[0] !== undefined
     ) {
-      console.log(osmData.features[0]);
+      // console.log(osmData.features[0]);
       setArea((getArea(osmData.features[0].geometry.coordinates[0])));
       setGeojson(osmData);
     }
