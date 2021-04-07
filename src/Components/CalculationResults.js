@@ -3,8 +3,8 @@ import style from "./css/calc-res.module.css";
 import CustomizationForm from './CustomizationForm';
 import OptimalResults from './OptimalResults';
 
-// const PORT = 'https://rooftop-pv-estimator-api.herokuapp.com';
-const PORT = "http://localhost:3000";
+const PORT = 'https://rooftop-pv-estimator-api.herokuapp.com';
+// const PORT = "http://localhost:3000";
 const CalculationResults = (props) => {
 
   const PV_VALUE = "crystSi"; // default value for PV technology
