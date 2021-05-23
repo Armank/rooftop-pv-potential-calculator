@@ -7,7 +7,7 @@ const ResultingGraph = ({monthlyDataset}) => {
 
     return (
         <div className={style.dataContainer}>
-        <Container className={style.container}>
+        <Container className={style.graphContainer}>
             <Bar
               data={{
                 labels: [

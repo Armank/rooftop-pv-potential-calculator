@@ -4,6 +4,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ResultingGraph from "./ResultingGraph";
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import descriptions from "./resources/descriptions.js";
 
 const OptimalResults = ({ addressObj, peakPower, pvValue, yearlyPvProd, solarSysSize, totInstallCost, roofArea, slope, azimuth, eurSqrMeter, avgElctrctPrice, payback, monthlyDataset, styles }) => {
     const [state, setState] = useState({
@@ -21,20 +25,31 @@ const OptimalResults = ({ addressObj, peakPower, pvValue, yearlyPvProd, solarSys
         monthEnergyArray: [],
     });
 
-    const handleChange = (e) => {
-        setState({
-            ...state,
-            pvValue: e.value
-        });
+    const [showMoreInfoBtn, setShowMoreInfoBtn] = useState(false);
+
+    const [open, setOpen] = useState(false);
+
+    const [dialogText, setDialogText] = useState();
+
+    const handleClickOpen = (e) => {
+        if (({}).hasOwnProperty.call(descriptions, e.target.id)) {
+            console.log(descriptions[e.target.id] + " === " + e.target.id);
+            setDialogText(descriptions[e.target.id]);
+        }
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
     };
 
     return (
         <div className={style.resultsContainer}>
             <div className={style.dataContainer}>
-                <Container className={style.container}>
+                <Container>
                     <Row>
                         <Col className={style.column}>
-                            <label>Address</label>
+                            <label id="address" onClick={handleClickOpen}>Address</label>
                         </Col>
                         <Col className={style.column}>
                             <label>
@@ -44,15 +59,7 @@ const OptimalResults = ({ addressObj, peakPower, pvValue, yearlyPvProd, solarSys
                     </Row>
                     <Row>
                         <Col className={style.column}>
-                            <label>Peak Power</label>
-                        </Col>
-                        <Col className={style.column}>
-                            <label>{Number(peakPower).toFixed(2)} kWp</label>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className={style.column}>
-                            <label>Yearly PV Energy Production</label>
+                            <label id="annualNrgProd" onClick={handleClickOpen}>Yearly PV Energy Production</label>
                         </Col>
                         <Col className={style.column}>
                             <label>{Number(yearlyPvProd).toFixed(2)} MWh</label>
@@ -60,15 +67,7 @@ const OptimalResults = ({ addressObj, peakPower, pvValue, yearlyPvProd, solarSys
                     </Row>
                     <Row>
                         <Col className={style.column}>
-                            <label>Solar System Size</label>
-                        </Col>
-                        <Col className={style.column}>
-                            <label>{solarSysSize} kW</label>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className={style.column}>
-                            <label>Total Installation Cost</label>
+                            <label id="totInstCost" onClick={handleClickOpen}>Total Installation Cost</label>
                         </Col>
                         <Col className={style.column}>
                             <label>{totInstallCost} €</label>
@@ -76,16 +75,34 @@ const OptimalResults = ({ addressObj, peakPower, pvValue, yearlyPvProd, solarSys
                     </Row>
                     <Row>
                         <Col className={style.column}>
-                            <label>Payback</label>
+                            <label id="payback" onClick={handleClickOpen}>Payback</label>
                         </Col>
                         <Col className={style.column}>
                             <label>{payback}</label>
                         </Col>
                     </Row>
+                </Container>
+                {showMoreInfoBtn && <Container className={style.container}>
+                    <Row>
+                        <Col className={style.column}>
+                            <label id="peakpower" onClick={handleClickOpen}>Peak Power</label>
+                        </Col>
+                        <Col className={style.column}>
+                            <label>{Number(peakPower).toFixed(2)} kWp</label>
+                        </Col>
+                    </Row>
+                    {/* <Row> 
+                        <Col className={style.column}>
+                            <label>Solar System Size</label>
+                        </Col>
+                        <Col className={style.column}>
+                            <label>{solarSysSize} kW</label>
+                        </Col>
+                    </Row> */}
                     <hr></hr>
                     <Row>
                         <Col className={style.column}>
-                            <label>Cost of a panel per 1 m<sup>2</sup></label>
+                            <label id="panelCost" onClick={handleClickOpen}>Cost of a panel per 1 m<sup>2</sup></label>
                         </Col>
                         <Col className={style.column}>
                             <label>{eurSqrMeter} €/m<sup>2</sup></label>
@@ -93,7 +110,7 @@ const OptimalResults = ({ addressObj, peakPower, pvValue, yearlyPvProd, solarSys
                     </Row>
                     <Row>
                         <Col className={style.column}>
-                            <label>Average electricity price</label>
+                            <label id="electrPrice" onClick={handleClickOpen}>Average electricity price</label>
                         </Col>
                         <Col className={style.column}>
                             <label>{avgElctrctPrice} €/MWh</label>
@@ -101,7 +118,7 @@ const OptimalResults = ({ addressObj, peakPower, pvValue, yearlyPvProd, solarSys
                     </Row>
                     <Row>
                         <Col className={style.column}>
-                            <label>Estimated Area</label>
+                            <label id="area" onClick={handleClickOpen}>Estimated Area</label>
                         </Col>
                         <Col className={style.column}>
                             <label>
@@ -112,7 +129,7 @@ const OptimalResults = ({ addressObj, peakPower, pvValue, yearlyPvProd, solarSys
                     <hr></hr>
                     <Row>
                         <Col className={style.column}>
-                            <label>Slope Angle</label>
+                            <label id="slope" onClick={handleClickOpen}>Slope Angle</label>
                         </Col>
                         <Col className={style.column}>
                             <label>{slope}</label>
@@ -120,7 +137,7 @@ const OptimalResults = ({ addressObj, peakPower, pvValue, yearlyPvProd, solarSys
                     </Row>
                     <Row>
                         <Col className={style.column}>
-                            <label>Azimuth</label>
+                            <label id="azimuth" onClick={handleClickOpen}>Azimuth</label>
                         </Col>
                         <Col className={style.column}>
                             <label>{azimuth}</label>
@@ -128,13 +145,52 @@ const OptimalResults = ({ addressObj, peakPower, pvValue, yearlyPvProd, solarSys
                     </Row>
                     <Row>
                         <Col className={style.column}>
-                            <label>PV Technology</label>
+                            <label id="pvTech" onClick={handleClickOpen}>PV Technology</label>
                         </Col>
                         <Col className={style.column}>
-                        <label>{state.pvValue ? 'Crystalline Silicon' : ''}</label>
+                            <label>{state.pvValue ? 'Crystalline Silicon' : ''}</label>
                         </Col>
                     </Row>
-                </Container>
+                </Container>}
+                {!showMoreInfoBtn && <div className={style.secondaryBtnContainer}>
+                    {
+                        <button
+                            className={style.showMoreInfoBtn}
+                            type="submit"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setShowMoreInfoBtn(true);
+                            }}>
+                            Show more info
+                        </button>
+                    }
+                </div>}
+                {showMoreInfoBtn && <div className={style.secondaryBtnContainer}>
+                    {
+                        <button
+                            className={style.showMoreInfoBtn}
+                            type="submit"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setShowMoreInfoBtn(false);
+                            }}>
+                            Show less info
+                        </button>
+                    }
+                </div>}
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    {/* <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle> */}
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            {dialogText}
+                        </DialogContentText>
+                    </DialogContent>
+                </Dialog>
             </div>
             <ResultingGraph monthlyDataset={monthlyDataset} />
         </div>

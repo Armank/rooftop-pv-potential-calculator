@@ -13,11 +13,12 @@ body {
 }
 
 .leaflet-container{
-  width: 50%;
-  height: 60%;
+  width: 80%;
+  height: 100%;
   position: relative;
-  left: 45%;
+  border: solid 1px #393e46;
+  /* left: 45%;
   top: 20%;
   border-radius: 20px;
-  box-shadow: 0px 0px 8px 8px rgb(187, 187, 147);
+  box-shadow: 0px 0px 8px 8px rgb(187, 187, 147); */
 }

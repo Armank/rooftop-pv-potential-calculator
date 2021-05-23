@@ -3,6 +3,10 @@ import MapBox from "./MapBox";
 import CalculationResults from "./CalculationResults";
 import style from "./css/component.module.css";
 
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 var turf = require("@turf/turf");
 const overpass = require("query-overpass");
 
@@ -25,7 +29,6 @@ const Main = () => {
 
   useEffect(() => {
     getSearchData();
-    // console.log(query);
     makeQuery(address.street, address.hNumber);
   }, [query, address.street, address.hNumber]);
 
@@ -33,10 +36,8 @@ const Main = () => {
     const exampleReq = `https://nominatim.openstreetmap.org/search/${query}?format=json&building=*&addressdetails=1&limit=1&polygon_geojson=1`;
     const response = await fetch(exampleReq);
     const data = await response.json();
-    // console.log(data);
     if (data === undefined || data.length === 0) {
       // array empty or does not exist
-      // console.log("data array is empty");
       alert("Given address unrecognized! Try again please.");
       setLatitude(DEFAULT_LATITUDE);
       setLongitude(DEFAULT_LONGITUDE);
@@ -62,7 +63,6 @@ const Main = () => {
       osmData.features !== undefined &&
       osmData.features[0] !== undefined
     ) {
-      // console.log(osmData.features[0]);
       setArea((getArea(osmData.features[0].geometry.coordinates[0])));
       setGeojson(osmData);
     }
@@ -111,48 +111,54 @@ const Main = () => {
 
   return (
     <div>
-      <div id="main" className={style.mainContainer}>
-        <div className={style.inputForm}>
-          <form
-            className={style.searchForm}
-            onSubmit={(e) => {
-              e.preventDefault();
-              if(street){
-                setQuery(
-                  street + " " + houseNumber.replace(/\//g, "-") + ", Tallinn"
-                );
-                validateAddress();
-              }
-            }}
-          >
-            <input
-              className={style.searchBar}
-              type="text"
-              onChange={(e) => {
-                setStreet(e.target.value);
-              }}
-              value={street}
-              placeholder="Search street ..."
-            />
+     <Container fluid className={style.mainContainer}>
+       <Row xs={1} lg={2} className={style.row}>
+         <Col className={style.comp}>
+            <form
+                className={style.searchForm}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if(street){
+                    setQuery(
+                      street + " " + houseNumber.replace(/\//g, "-") + ", Tallinn"
+                    );
+                    validateAddress();
+                  }
+                }}
+              >
+                <input
+                  className={style.searchBar}
+                  type="text"
+                  onChange={(e) => {
+                    setStreet(e.target.value);
+                  }}
+                  value={street}
+                  placeholder="Search street ..."
+                />
 
-            <input
-              className={style.searchBar}
-              type="text"
-              onChange={(e) => {
-                setHouseNumber(e.target.value);
-              }}
-              value={houseNumber}
-              placeholder="Search house number ..."
-            />
+                <input
+                  className={style.searchBar}
+                  type="text"
+                  onChange={(e) => {
+                    setHouseNumber(e.target.value);
+                  }}
+                  value={houseNumber}
+                  placeholder="Search house number ..."
+                />
 
-            <button className={style.searchButton} type="submit">
-              Search
-            </button>
-          </form>
-        </div>
-        {updateMapBox()}
-      </div>
-      <CalculationResults street={address.street} houseNumber={address.hNumber} 
+                <a className={style.btnLink} href="#results">
+                  <button className={style.searchButton} type="submit">
+                    Search
+                  </button>
+                </a>
+              </form>
+         </Col>
+         <Col className={style.comp}>
+            {updateMapBox()}
+         </Col>
+       </Row>
+     </Container>
+     <CalculationResults street={address.street} houseNumber={address.hNumber} 
         geoJson={geojson} area={area} latitude={lat} longitude={long} />
     </div>
   );

@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import Main from './Components/Main';
-import Footer from './Footer/Footer';
 import Header from './Header/Header';
 
 function App() {
@@ -9,7 +8,6 @@ function App() {
     <div className="App">
       <Header />
       <Main />
-      <Footer />
     </div>
   );
 }

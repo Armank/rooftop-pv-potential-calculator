@@ -6,6 +6,10 @@ import Select from "react-select";
 import Form from "react-bootstrap/Form";
 import options from "./resources/options";
 import ResultingGraph from "./ResultingGraph";
+import descriptions from "./resources/descriptions.js";
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 import style from "./css/calc-res.module.css";
 
@@ -19,7 +23,6 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
         monthlyOutputData: monthlyDataset || [],
         eurSqrMeter: eurSqrMeter || 0,
         avgElctrctPrice: avgElctrctPrice,
-        // totInstallCost: totInstallCost || 0,
     });
     const [rawData, setRawData] = useState([]);
     const [newPeakPower, setNewPeakPower] = useState(peakPower || 0);
@@ -27,6 +30,10 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
     const [customInstallCost, setCustomInstallCost] = useState(totInstallCost || 0);
     const [customPayback, setCustomPayback] = useState(payback || 0);
     let array = [];
+
+    const [open, setOpen] = useState(false);
+
+    const [dialogText, setDialogText] = useState();
 
     const getCalculationData = async (
         lat,
@@ -68,10 +75,6 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
         const response = await fetch(request);
         const data = await response.json();
         setCustomInstallCost(data.totalCost);
-        // setState({
-        //     ...state,
-        //     totInstallCost: data.totalCost
-        // });
         getPaybackTime(data.totalCost, yearlyPvProd, electrPrice);
     };
 
@@ -91,10 +94,6 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
     const onSubmit = (e, lat, long, roofArea, pvValue, slope, azimuth, eurSqrMeter, totInstallCost, yearlyPvProd, electrPrice) => {
         e.preventDefault();
         getCalculationData(lat, long, roofArea, pvValue, slope, azimuth, eurSqrMeter, electrPrice);
-        // getTotalInstallationCost(roofArea, eurSqrMeter);
-        // alert(totInstallCost + ' ' + yearlyPvProd + ' ' + electrPrice);
-        // alert(totInstallCost);
-        // getPaybackTime(totInstallCost, yearlyPvProd, electrPrice);
     }
 
     rawData.forEach((item) => {
@@ -129,13 +128,25 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
         }
     }
 
+    const handleClickOpen = (e) => {
+        if (({}).hasOwnProperty.call(descriptions, e.target.id)) {
+            console.log(descriptions[e.target.id] + " === " + e.target.id);
+            setDialogText(descriptions[e.target.id]);
+        }
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <div className={style.resultsContainer}>
             <div className={style.dataContainer}>
                 <Container className={style.containerCustom}>
                     <Row>
                         <Col className={style.column}>
-                            <label>Address</label>
+                            <label id="address" onClick={handleClickOpen}>Address</label>
                         </Col>
                         <Col className={style.column}>
                             <label>
@@ -144,24 +155,24 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
                         </Col>
                     </Row>
                     <Row>
-                        <Col className={style.column}>
-                            <label>Peak Power</label>
+                        <Col  className={style.column}>
+                            <label id="peakpower" onClick={handleClickOpen}>Peak Power</label>
                         </Col>
                         <Col className={style.column}>
                             <label>{Number(newPeakPower).toFixed(2)} kWp</label>
                         </Col>
                     </Row>
-                    <Row>
+                    {/* <Row>
                         <Col className={style.column}>
                             <label>Solar System Size</label>
                         </Col>
                         <Col className={style.column}>
                             <label>{customSolarSysSize} kW</label>
                         </Col>
-                    </Row>
+                    </Row> */}
                     <Row>
                         <Col className={style.column}>
-                            <label>Yearly PV Energy Production</label>
+                            <label id="annualNrgProd" onClick={handleClickOpen}>Yearly PV Energy Production</label>
                         </Col>
                         <Col className={style.column}>
                             <label>{Number(state.yearlyPvProd).toFixed(2)} MWh</label>
@@ -169,7 +180,7 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
                     </Row>
                     <Row>
                         <Col className={style.column}>
-                            <label>Total Installation Cost</label>
+                            <label id="totInstCost" onClick={handleClickOpen}>Total Installation Cost</label>
                         </Col>
                         <Col className={style.column}>
                             <label>{customInstallCost} €</label>
@@ -177,7 +188,7 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
                     </Row>
                     <Row>
                         <Col className={style.column}>
-                            <label>Payback</label>
+                            <label id="payback" onClick={handleClickOpen}>Payback</label>
                         </Col>
                         <Col className={style.column}>
                             <label>{customPayback}</label>
@@ -187,7 +198,7 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
                     <Form>
                         <Row>
                             <Col className={style.column}>
-                                <Form.Label>Cost of a panel per 1 m<sup>2</sup></Form.Label>
+                                <Form.Label id="panelCost" onClick={handleClickOpen}>Cost of a panel per 1 m<sup>2</sup></Form.Label>
                             </Col>
                             <Col className={style.column}>
                                 <Form.Control name="eurSqrMeter" type="number" value={state.eurSqrMeter} onChange={(e) => change(e)} />
@@ -195,7 +206,7 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
                         </Row>
                         <Row>
                             <Col className={style.column}>
-                                <Form.Label>Average electricity price €/MWh</Form.Label>
+                                <Form.Label id="electrPrice" onClick={handleClickOpen}>Average electricity price €/MWh</Form.Label>
                             </Col>
                             <Col className={style.column}>
                                 <Form.Control name="avgElctrctPrice" type="number" value={state.avgElctrctPrice} onChange={(e) => change(e)} />
@@ -203,7 +214,7 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
                         </Row>
                         <Row>
                             <Col className={style.column}>
-                                <Form.Label>Estimated Area [m<sup>2</sup>]</Form.Label>
+                                <Form.Label id="area" onClick={handleClickOpen}>Estimated Area [m<sup>2</sup>]</Form.Label>
                             </Col>
                             <Col className={style.column}>
                                 <Form.Control name="roofArea" type="number" value={state.roofArea} onChange={(e) => change(e)} />
@@ -212,7 +223,7 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
                         <hr></hr>
                         <Row>
                             <Col className={style.column}>
-                                <Form.Label>Slope Angle</Form.Label>
+                                <Form.Label id="slope" onClick={handleClickOpen}>Slope Angle</Form.Label>
                             </Col>
                             <Col className={style.column}>
                                 <Form.Control name="slope" type="number" value={state.slope} onChange={(e) => change(e)} />
@@ -220,7 +231,7 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
                         </Row>
                         <Row>
                             <Col className={style.column}>
-                                <Form.Label>Azimuth</Form.Label>
+                                <Form.Label id="azimuth" onClick={handleClickOpen}>Azimuth</Form.Label>
                             </Col>
                             <Col className={style.column}>
                                 <Form.Control name="azimuth" type="number" value={state.azimuth} onChange={(e) => change(e)} />
@@ -228,7 +239,7 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
                         </Row>
                         <Row>
                             <Col className={style.column}>
-                                <label>PV Technology</label>
+                                <label id="pvTech" onClick={handleClickOpen}>PV Technology</label>
                             </Col>
                             <Col className={style.column}>
                                 <Select
@@ -252,6 +263,19 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
                         </Row>
                     </Form>
                 </Container>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    {/* <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle> */}
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            {dialogText}
+                        </DialogContentText>
+                    </DialogContent>
+                </Dialog>
             </div>
             <ResultingGraph monthlyDataset={array.length !== 0 ? array : state.monthlyOutputData} />
         </div>

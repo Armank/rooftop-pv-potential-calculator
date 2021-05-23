@@ -1,71 +1,129 @@
 .container {
-    /* display: none; */
     position: relative;
     font-family: 'Noto Serif', serif;
+    background-color:  #eeeeee;
+    
+}
+
+.graphContainer {
+    background-color: white;
+    border: solid 1px #393e46;
 }
 
 .containerCustom {
-    /* display: none; */
     position: relative;
     font-family: 'Noto Serif', serif;
-    background-color: bisque;
 }
 
 .resultsContainer {
-    /* width: 90%; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
-    /* flex-direction: column;
-    justify-content: center;
-    align-items: center; */
 }
 
 .dataContainer {
     width: 80%;
-    /* height: 80%; */
     margin: auto;
-    background-color: white;
-    border-radius: 20px;
     padding: 15px;
-    font-size: 1.3em;
-    color: #ffffff;
+    font-size: 1em;
+    color: #393e46;
 }
 
 .column {
-    /* border: 2px solid; */
-    border-radius: 10px;
-    margin: 10px;
-    background-color: #59886b;
+    margin: 5px;
+    background-color: white;
     padding: 0.5rem;
+    border: solid 1px #393e46;
 }
 
 .customBtnContainer {
     width: 80%;
     margin: auto;
-    border-radius: 20px;
     padding: 15px;
-    font-size: 1.3em;
-    color: #ffffff;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.searchButton {
+.searchButton{
     outline-style: none !important;
-    background-color: rgb(85, 136, 28);
-    border: none;
-    border-radius: 20px;
+    background-color: #00adb5;
+    border: solid 1px #393e46;
     padding: 10px 10px;
-    color: white;
+    margin: 10px;
+    color: #222831;
     font-size: 1.5rem;
+    width: auto;
+}
+
+.searchButton:active, 
+ .addButton:focus 
+{
+     border: 0.2rem solid #393e46;
+     color:#eeeeee;
 }
 
 .customizeButton {
     outline-style: none !important;
-    background-color: rgb(85, 136, 28);
-    border: none;
-    border-radius: 20px;
-    padding: 15px 15px;
-    color: white;
+    background-color: #00adb5;
+    border: solid 1px #393e46;
+    padding: 10px 10px;
+    margin: 10px;
+    color: #222831;
     font-size: 1.5rem;
+    width: auto;
+}
+
+.resultGraph {
+    background-color: white;
+}
+
+.secondaryBtnContainer {
+    width: auto;
+    text-align: right;
+    margin: 5px;
+}
+
+.showMoreInfoBtn {
+    outline-style: none !important;
+    border: solid 1px #00adb5;
+    color: #00adb5;
+    font-size: 1rem;
+    width: auto;
+}
+
+@media only screen and (max-width: 990px) {
+    .resultsContainer {
+        display: grid;  
+        grid-template-columns: 1fr;
+        grid-gap: 10px;
+    }
+
+    .dataContainer {
+        width: 90%;
+        padding: 5px;
+        font-size: 0.8em;
+        color: #393e46;
+    }
+
+    .column {
+        margin: 2px;
+        background-color: white;
+        padding: 0.1rem;
+    }
+
+    .customizeButton {
+        font-size: 1rem;
+        width: auto;
+    }
+
+    .searchButton {
+        font-size: 1rem;
+        width: 50%;
+    }
+
+    .secondaryBtnContainer {
+        margin-top: 5px;
+        margin: 2px;
+    }
 }
