@@ -7,7 +7,7 @@ const PORT = 'https://rooftop-pv-estimator-api.herokuapp.com';
 // const PORT = "http://localhost:3000";
 const CalculationResults = (props) => {
 
-  const PV_VALUE = "crystSi"; // default value for PV technology
+  const PV_VALUE = "crystSi"; // default value for photovoltaic technology
   const EUR_SQR_METER = 41; // default price for cost of a PV panel per square meter for Crystaline Silicon technology Eur/m2
   const AVG_ELCTRCT_PRICE = 33.69; // default price for electricity in 2020 in Estonia from NordPool in Eur/MWh 
 
