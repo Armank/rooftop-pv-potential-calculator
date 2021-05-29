@@ -78,7 +78,7 @@ const OptimalResults = ({ addressObj, peakPower, pvValue, yearlyPvProd, solarSys
                             <label id="payback" onClick={handleClickOpen}>Payback</label>
                         </Col>
                         <Col className={style.column}>
-                            <label>{payback}</label>
+                            <label>{payback} years</label>
                         </Col>
                     </Row>
                 </Container>

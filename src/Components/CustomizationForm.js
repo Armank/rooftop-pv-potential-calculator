@@ -191,7 +191,7 @@ const CustomizationForm = ({ PORT, lat, long, addressObj, peakPower, yearlyPvPro
                             <label id="payback" onClick={handleClickOpen}>Payback</label>
                         </Col>
                         <Col className={style.column}>
-                            <label>{customPayback}</label>
+                            <label>{customPayback} years</label>
                         </Col>
                     </Row>
                     <hr></hr>
